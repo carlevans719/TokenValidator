@@ -1,25 +1,18 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Timers;
+using Microsoft.IdentityModel.Logging;
 
 namespace TokenValidator
 {
     public class Program
     {
-        private static System.Timers.Timer aTimer;
 
         public static void Main(string[] args)
         {
-            StartTimer();
+            IdentityModelEventSource.ShowPII = true;
+            TokenValidationParamsStore.Start();
             CreateHostBuilder(args).Build().Run();
-            aTimer.Stop();
-            aTimer.Dispose();
+            TokenValidationParamsStore.Stop();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -28,18 +21,5 @@ namespace TokenValidator
                 {
                     webBuilder.UseStartup<Startup>();
                 });
-
-        private static void StartTimer()
-        {
-            aTimer = new System.Timers.Timer(5 * 1000);
-            aTimer.Elapsed += OnTimer;
-            aTimer.AutoReset = true;
-            aTimer.Enabled = true;
-        }
-
-        private static void OnTimer(Object source, ElapsedEventArgs e)
-        {
-            Console.WriteLine("Timer Fired");
-        }
     }
 }

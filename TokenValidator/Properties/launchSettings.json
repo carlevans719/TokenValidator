@@ -31,6 +31,9 @@
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+      "environmentVariables": {
+        "JWKS_URI": "https://login.microsoftonline.com/34e8fbbe-780a-48df-b7b9-7ee08c47cb2a/discovery/v2.0/keys"
+      },
       "publishAllPorts": true,
       "useSSL": true
     }
